@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/ordersItem"
+        android:title="@string/orders_item"
+        android:icon="@drawable/ic_orders"
+        app:showAsAction="always"/>
+    <item android:id="@+id/fabItem"
+        android:title="" />
+    <item
+        android:id="@+id/analyticsItem"
+        android:title="@string/analytics_item"
+        android:icon="@drawable/ic_analytics"
+        app:showAsAction="always"/>
+</menu>

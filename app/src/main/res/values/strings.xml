@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">PrinterApp</string>
+    <string name="orders_item">Заказы</string>
+    <string name="analytics_item">Анализ</string>
+    <string name="create">Создать</string>
+    <string name="save">Сохранить</string>
+    <string name="delete_confirmation">Вы действительно хотите отменить заказ?</string>
+    <string name="finish_confirmation">Вы действительно хотите завершить заказ?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+</resources>

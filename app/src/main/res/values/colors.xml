@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="app_primary">#FFFFFF</color>
+    <color name="app_secondary">#228CBC</color>
+    <color name="navbar_text">#061D27</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="positive_stat">#00FF00</color>
+    <color name="negative_stat">#FF0000</color>
+    <color name="same_stat">#515151</color>
+</resources>
