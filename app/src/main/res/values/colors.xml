@@ -8,4 +8,5 @@
     <color name="positive_stat">#00FF00</color>
     <color name="negative_stat">#FF0000</color>
     <color name="same_stat">#515151</color>
+    <color name="price">#FFC105</color>
 </resources>

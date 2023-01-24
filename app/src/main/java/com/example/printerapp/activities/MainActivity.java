@@ -11,6 +11,7 @@ import com.example.printerapp.fragments.AnalyticsFragment;
 import com.example.printerapp.fragments.BaseFragment;
 import com.example.printerapp.fragments.CreateFragment;
 import com.example.printerapp.fragments.OrdersFragment;
+import com.example.printerapp.managers.DbManager;
 import com.example.printerapp.managers.Router;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -20,12 +21,15 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private Router router;
+    private DbManager dbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        dbManager = new DbManager(getApplicationContext());
 
         List<BaseFragment> fragments = Arrays.asList(
                 new OrdersFragment(Routes.ORDERS),
@@ -45,5 +49,13 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingActionButton createButton = findViewById(R.id.createButton);
         createButton.setOnClickListener(view -> router.route(Routes.CREATE));
+    }
+
+    public DbManager getDbManager() {
+        return dbManager;
+    }
+
+    public Router getRouter() {
+        return router;
     }
 }

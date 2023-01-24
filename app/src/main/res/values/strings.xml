@@ -8,4 +8,5 @@
     <string name="finish_confirmation">Вы действительно хотите завершить заказ?</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
+    <string name="not_found">Ничего не найдено!\nДобавьте заказ, чтобы увидеть его в списке</string>
 </resources>
