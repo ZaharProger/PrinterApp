@@ -3,14 +3,31 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/button_style.xml" value="0.245" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/ic_delete.xml" value="0.245" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/ic_edit.xml" value="0.245" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/ic_finish.xml" value="0.245" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/ic_sort_asc.xml" value="0.245" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/input_style.xml" value="0.245" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/nav_bar_style.xml" value="0.2585" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/nav_item_style.xml" value="0.2575" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/order_item_style.xml" value="0.245" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/order_list_buttons_style.xml" value="0.245" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/order_list_item_date_style.xml" value="0.245" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/order_list_item_footer_style.xml" value="0.245" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/order_list_item_style.xml" value="0.245" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/spinner_item_style.xml" value="0.245" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/spinner_item_style_dark.xml" value="0.245" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/spinner_item_style_light.xml" value="0.245" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/wrong_input_style.xml" value="0.245" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/layout/customers_list_item.xml" value="0.17346014492753623" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/layout/fragment_analytics.xml" value="0.17346014492753623" />
-        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/layout/fragment_create.xml" value="0.17346014492753623" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/layout/fragment_create.xml" value="0.264" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/layout/fragment_orders.xml" value="0.17346014492753623" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/layout/order_list_item.xml" value="0.264" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/layout/resources_list_item.xml" value="0.17346014492753623" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/layout/spinner_dropdown_layout.xml" value="0.17346014492753623" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/menu/menu_layout.xml" value="0.25416666666666665" />
       </map>
     </option>

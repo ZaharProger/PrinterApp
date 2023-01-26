@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.printerapp.R;
 import com.example.printerapp.constants.Routes;
+import com.example.printerapp.entities.BaseEntity;
 import com.example.printerapp.fragments.AnalyticsFragment;
 import com.example.printerapp.fragments.BaseFragment;
 import com.example.printerapp.fragments.CreateFragment;
+import com.example.printerapp.fragments.IUpdatable;
 import com.example.printerapp.fragments.OrdersFragment;
 import com.example.printerapp.managers.DbManager;
 import com.example.printerapp.managers.Router;

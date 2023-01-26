@@ -4,17 +4,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.printerapp.R;
 import com.example.printerapp.activities.MainActivity;
+import com.example.printerapp.adapters.OrdersListAdapter;
 import com.example.printerapp.constants.Routes;
 import com.example.printerapp.entities.BaseEntity;
+import com.example.printerapp.managers.DbManager;
+
+import java.util.Arrays;
 
 public class OrdersFragment extends BaseFragment implements IUpdatable {
 
@@ -27,6 +33,22 @@ public class OrdersFragment extends BaseFragment implements IUpdatable {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         fragmentView = inflater.inflate(R.layout.fragment_orders, container, false);
+
+        DbManager dbManager = ((MainActivity) getActivity()).getDbManager();
+
+        RecyclerView ordersList = fragmentView.findViewById(R.id.ordersList);
+        Spinner customersList = fragmentView.findViewById(R.id.customersList);
+
+        ArrayAdapter<String> customersListAdapter = new ArrayAdapter<>(getContext(),
+                R.layout.customers_list_item, dbManager.getCustomers());
+        customersListAdapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
+        customersListAdapter.notifyDataSetChanged();
+        customersList.setAdapter(customersListAdapter);
+
+        ordersList.setHasFixedSize(false);
+        ordersList.setLayoutManager(new LinearLayoutManager(getContext()));
+        ordersList.setAdapter(new OrdersListAdapter(getContext(),
+                dbManager.getOrders(), Arrays.asList(this)));
 
         return fragmentView;
     }

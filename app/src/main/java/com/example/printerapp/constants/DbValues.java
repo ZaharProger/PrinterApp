@@ -46,7 +46,7 @@ public enum DbValues implements EnumDecoder {
     INSERT_RESOURCE_TYPES("INSERT INTO resource_types(resource_name, resource_price) " +
             "VALUES ('PLA', 8.5), ('ABS', 10.0), ('HIPS', 9.5), ('PETG', 11.8), ('SBS', 15.5)," +
             " ('Фотополимер 16мкм', 65.5), ('Фотополимер 32мкм', 82.5), ('Полиамид', 34.8);"),
-    GET_ORDERS("SELECT *, resource_id, resource_name, resource_price FROM orders" +
+    GET_ORDERS("SELECT *, resource_id, resource_name, resource_price FROM orders " +
             "JOIN resource_types ON resource_id = resource_type;"),
     GET_RESOURCES("SELECT * FROM resource_types;");
 
