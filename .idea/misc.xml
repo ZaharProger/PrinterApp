@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/button_style.xml" value="0.245" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/ic_back.xml" value="0.245" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/ic_delete.xml" value="0.245" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/ic_edit.xml" value="0.245" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/ic_finish.xml" value="0.245" />
@@ -20,6 +21,7 @@
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/spinner_item_style_dark.xml" value="0.245" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/spinner_item_style_light.xml" value="0.245" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/wrong_input_style.xml" value="0.245" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/layout/activity_create.xml" value="0.264" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/layout/customers_list_item.xml" value="0.17346014492753623" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/layout/fragment_analytics.xml" value="0.17346014492753623" />

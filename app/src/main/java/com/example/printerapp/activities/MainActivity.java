@@ -1,29 +1,21 @@
 package com.example.printerapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.view.View;
 
 import com.example.printerapp.R;
-import com.example.printerapp.constants.Routes;
-import com.example.printerapp.entities.BaseEntity;
 import com.example.printerapp.fragments.AnalyticsFragment;
 import com.example.printerapp.fragments.BaseFragment;
-import com.example.printerapp.fragments.CreateFragment;
-import com.example.printerapp.fragments.IUpdatable;
 import com.example.printerapp.fragments.OrdersFragment;
 import com.example.printerapp.managers.DbManager;
-import com.example.printerapp.managers.Router;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
-    private Router router;
     private DbManager dbManager;
 
     @Override
@@ -32,33 +24,34 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        dbManager = new DbManager(getApplicationContext());
-
-        List<BaseFragment> fragments = Arrays.asList(
-                new OrdersFragment(Routes.ORDERS),
-                new AnalyticsFragment(Routes.ANALYTICS),
-                new CreateFragment(Routes.CREATE)
-        );
-        router = Router.getInstance(this, R.id.viewContainer, fragments);
+        dbManager = DbManager.getInstance(getApplicationContext());
 
         BottomNavigationView navbar = findViewById(R.id.navbar);
         navbar.setOnItemSelectedListener(item -> {
-            Routes route = item.getItemId() == R.id.ordersItem? Routes.ORDERS :
-                    item.getItemId() == R.id.analyticsItem? Routes.ANALYTICS : null;
+            BaseFragment fragmentToRoute = item.getItemId() == R.id.ordersItem?
+                    new OrdersFragment() : item.getItemId() == R.id.analyticsItem?
+                    new AnalyticsFragment() : null;
 
-            return route != null && router.route(route);
+            if (fragmentToRoute != null) {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .replace(R.id.viewContainer, fragmentToRoute)
+                        .commitNow();
+            }
+
+            return fragmentToRoute != null;
         });
         navbar.setSelectedItemId(R.id.ordersItem);
 
         FloatingActionButton createButton = findViewById(R.id.createButton);
-        createButton.setOnClickListener(view -> router.route(Routes.CREATE));
+        createButton.setOnClickListener(view -> {
+            Intent intent = new Intent(this, CreateActivity.class);
+            startActivity(intent);
+        });
     }
 
     public DbManager getDbManager() {
         return dbManager;
-    }
-
-    public Router getRouter() {
-        return router;
     }
 }

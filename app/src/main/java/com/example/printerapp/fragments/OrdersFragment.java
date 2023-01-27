@@ -16,17 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.printerapp.R;
 import com.example.printerapp.activities.MainActivity;
 import com.example.printerapp.adapters.OrdersListAdapter;
-import com.example.printerapp.constants.Routes;
 import com.example.printerapp.entities.BaseEntity;
 import com.example.printerapp.managers.DbManager;
 
 import java.util.Arrays;
 
 public class OrdersFragment extends BaseFragment implements IUpdatable {
-
-    public OrdersFragment(Routes fragmentViewId) {
-        this.fragmentViewId = fragmentViewId;
-    }
 
     @Nullable
     @Override

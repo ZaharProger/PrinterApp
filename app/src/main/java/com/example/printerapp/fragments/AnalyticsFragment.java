@@ -9,13 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.printerapp.R;
-import com.example.printerapp.constants.Routes;
 
 public class AnalyticsFragment extends BaseFragment {
-
-    public AnalyticsFragment(Routes fragmentViewId) {
-        this.fragmentViewId = fragmentViewId;
-    }
 
     @Nullable
     @Override

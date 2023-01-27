@@ -17,14 +17,23 @@ import java.util.List;
 public class DbManager extends SQLiteOpenHelper {
     private ArrayList<Order> orders;
     private ArrayList<Resource> resources;
+    private static DbManager dbManager;
 
-    public DbManager(Context context) {
+    private DbManager(Context context) {
         super(context, DbValues.DB_NAME.getStringValue(), null,
                 Integer.parseInt(DbValues.DB_SCHEMA.getStringValue()));
 
         orders = new ArrayList<>();
         resources = new ArrayList<>();
         fillRepositories();
+    }
+
+    public static synchronized DbManager getInstance(Context context) {
+        if (dbManager == null) {
+            dbManager = new DbManager(context);
+        }
+
+        return dbManager;
     }
 
     @Override
