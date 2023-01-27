@@ -43,10 +43,15 @@ public enum DbValues implements EnumDecoder {
             "order_size REAL NOT NULL," +
             "resource_type INTEGER," +
             "FOREIGN KEY (resource_type) REFERENCES resource_types(resource_id));"),
+    INSERT_ORDER("INSERT INTO orders(order_name, order_amount, order_start_date, " +
+            "order_end_date, order_customer_name, order_customer_phone, order_size, " +
+            "resource_type) VALUES(?, ?, ?, ?, ?, ?, ?, ?);"),
     INSERT_RESOURCE_TYPES("INSERT INTO resource_types(resource_name, resource_price) " +
             "VALUES ('PLA', 8.5), ('ABS', 10.0), ('HIPS', 9.5), ('PETG', 11.8), ('SBS', 15.5)," +
             " ('Фотополимер 16мкм', 65.5), ('Фотополимер 32мкм', 82.5), ('Полиамид', 34.8);"),
-    GET_ORDERS("SELECT *, resource_id, resource_name, resource_price FROM orders " +
+    GET_ORDERS("SELECT order_id, order_name, order_amount, order_start_date, " +
+            "order_end_date, order_customer_name, order_customer_phone, order_size, resource_id, " +
+            "resource_name, resource_price FROM orders " +
             "JOIN resource_types ON resource_id = resource_type;"),
     GET_RESOURCES("SELECT * FROM resource_types;");
 

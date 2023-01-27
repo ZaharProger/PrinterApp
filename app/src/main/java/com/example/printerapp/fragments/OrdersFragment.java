@@ -45,6 +45,8 @@ public class OrdersFragment extends BaseFragment implements IUpdatable {
         ordersList.setAdapter(new OrdersListAdapter(getContext(),
                 dbManager.getOrders(), Arrays.asList(this)));
 
+        updateView(null, null);
+
         return fragmentView;
     }
 

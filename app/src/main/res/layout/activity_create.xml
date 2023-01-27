@@ -105,7 +105,7 @@
             android:layout_marginEnd="10dp"
             android:background="@drawable/input_style"
             android:hint="@string/end_date"
-            android:inputType="datetime"
+            android:inputType="text"
             android:padding="8dp"
             android:scrollbars="none"
             android:textAlignment="center"

@@ -25,13 +25,13 @@ public class DbManager extends SQLiteOpenHelper {
 
         orders = new ArrayList<>();
         resources = new ArrayList<>();
-        fillRepositories();
     }
 
     public static synchronized DbManager getInstance(Context context) {
         if (dbManager == null) {
             dbManager = new DbManager(context);
         }
+        dbManager.fillRepositories();
 
         return dbManager;
     }
@@ -100,7 +100,6 @@ public class DbManager extends SQLiteOpenHelper {
                                        cursor.getDouble(orderResourcePriceColumnIndex)
                                )
                        ));
-
                     } while (cursor.moveToNext());
                 }
             }
@@ -165,5 +164,19 @@ public class DbManager extends SQLiteOpenHelper {
 
     public ArrayList<Resource> getResources() {
         return resources;
+    }
+
+    public void addOrder(Order order) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        sqLiteDatabase.execSQL(DbValues.INSERT_ORDER.getStringValue(), new Object[]{
+                order.getName(),
+                order.getAmount(),
+                order.getStartDate(),
+                order.getEndDate(),
+                order.getCustomerName(),
+                order.getCustomerPhone(),
+                order.getSize(),
+                order.getResource().getKey()
+        });
     }
 }

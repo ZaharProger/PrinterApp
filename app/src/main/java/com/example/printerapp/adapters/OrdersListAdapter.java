@@ -61,10 +61,10 @@ public class OrdersListAdapter extends
         holder.orderCustomerPhoneText.setText(order.getCustomerPhone());
 
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ROOT);
-        holder.orderStartDateText.setText(String.format("%s: %s",
+        holder.orderStartDateText.setText(String.format("%s%n%s",
                 context.getString(R.string.start_date),
                 format.format(new Date((long) order.getStartDate()))));
-        holder.orderEndDateText.setText(String.format("%s: %s",
+        holder.orderEndDateText.setText(String.format("%s%n%s",
                 context.getString(R.string.end_date),
                 format.format(new Date((long) order.getEndDate()))));
     }

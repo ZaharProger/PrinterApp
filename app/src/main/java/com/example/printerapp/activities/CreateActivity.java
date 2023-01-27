@@ -19,9 +19,14 @@ import com.example.printerapp.R;
 import com.example.printerapp.activities.MainActivity;
 import com.example.printerapp.adapters.ResourcesListAdapter;
 import com.example.printerapp.entities.BaseEntity;
+import com.example.printerapp.entities.Order;
 import com.example.printerapp.entities.Resource;
 import com.example.printerapp.fragments.IUpdatable;
 import com.example.printerapp.managers.DbManager;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class CreateActivity extends AppCompatActivity implements IUpdatable, TextWatcher,
         AdapterView.OnItemSelectedListener {
@@ -33,9 +38,13 @@ public class CreateActivity extends AppCompatActivity implements IUpdatable, Tex
         setContentView(R.layout.activity_create);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        EditText nameField = findViewById(R.id.nameField);
+        EditText endDateField = findViewById(R.id.endDateField);
         EditText amountField = findViewById(R.id.amountField);
         EditText sizeField = findViewById(R.id.sizeField);
         Spinner resourcesList = findViewById(R.id.resourcesList);
+        EditText customerNameField = findViewById(R.id.customerNameField);
+        EditText customerPhoneField = findViewById(R.id.customerPhoneField);
 
         dbManager = DbManager.getInstance(getApplicationContext());
         ResourcesListAdapter listAdapter = new ResourcesListAdapter(getApplicationContext(),
@@ -53,11 +62,39 @@ public class CreateActivity extends AppCompatActivity implements IUpdatable, Tex
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         });
+
+        ((Button) findViewById(R.id.addOrderButton)).setOnClickListener(view -> {
+            try {
+                SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+                Date date = format.parse(endDateField.getText().toString());
+
+                dbManager.addOrder(new Order(
+                        0,
+                        nameField.getText().toString().trim(),
+                        Integer.parseInt(amountField.getText().toString().trim()),
+                        System.currentTimeMillis(),
+                        date.getTime(),
+                        customerNameField.getText().toString().trim(),
+                        customerPhoneField.getText().toString().trim(),
+                        Double.parseDouble(sizeField.getText().toString().trim()),
+                        listAdapter.getResourceByIndex(resourcesList.getSelectedItemPosition())
+                ));
+
+            } catch (ParseException ignored) {
+            }
+        });
     }
 
     @Override
     public void updateView(BaseEntity<Integer> relatedEntity, View relatedView) {
-        if (relatedEntity instanceof Resource && relatedView instanceof TextView) {
+        Spinner resourcesList = findViewById(R.id.resourcesList);
+        relatedView = findViewById(R.id.totalPriceField);
+
+        ResourcesListAdapter listAdapter = (ResourcesListAdapter) resourcesList.getAdapter();
+        relatedEntity = listAdapter.getResourceByIndex(resourcesList
+                .getSelectedItemPosition());
+
+        if (relatedEntity != null && relatedView instanceof TextView) {
             EditText amountField = findViewById(R.id.amountField);
             EditText sizeField = findViewById(R.id.sizeField);
 
@@ -80,12 +117,7 @@ public class CreateActivity extends AppCompatActivity implements IUpdatable, Tex
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        Spinner resourcesList = findViewById(R.id.resourcesList);
-        TextView totalPriceField = findViewById(R.id.totalPriceField);
-
-        ResourcesListAdapter listAdapter = (ResourcesListAdapter) resourcesList.getAdapter();
-        updateView(listAdapter.getResourceByIndex(resourcesList
-                .getSelectedItemPosition()), totalPriceField);
+        updateView(null, null);
     }
 
     @Override
@@ -95,12 +127,7 @@ public class CreateActivity extends AppCompatActivity implements IUpdatable, Tex
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        Spinner resourcesList = findViewById(R.id.resourcesList);
-        TextView totalPriceField = findViewById(R.id.totalPriceField);
-
-        ResourcesListAdapter listAdapter = (ResourcesListAdapter) resourcesList.getAdapter();
-        updateView(listAdapter.getResourceByIndex(resourcesList
-                .getSelectedItemPosition()), totalPriceField);
+        updateView(null, null);
     }
 
     @Override
