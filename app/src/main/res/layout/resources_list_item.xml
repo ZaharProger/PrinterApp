@@ -2,11 +2,11 @@
 <TextView android:id="@+id/resourceNameText"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/spinner_item_style_light"
     android:ellipsize="marquee"
-    android:textAlignment="viewStart"
+    android:textAlignment="center"
     android:textColor="@color/navbar_text"
     android:textColorHighlight="@color/app_secondary"
     android:textColorLink="@color/app_secondary"
     android:textSize="16sp"
+    android:padding="5dp"
     xmlns:android="http://schemas.android.com/apk/res/android" />

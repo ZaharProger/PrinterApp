@@ -2,7 +2,7 @@
 <TextView android:id="@+id/customerNameText"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/spinner_item_style_dark"
+    android:background="@color/navbar_text"
     android:textAlignment="viewStart"
     android:textColor="@color/app_primary"
     android:textColorHighlight="@color/app_secondary"

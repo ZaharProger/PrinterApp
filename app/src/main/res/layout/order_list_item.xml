@@ -116,56 +116,50 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/orderSizeText" />
 
-    <LinearLayout
-        android:id="@+id/dateInfo"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/orderStartDateText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/order_list_item_date_style"
-        android:orientation="vertical"
-        android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/customerInfo"
+        android:textAlignment="viewStart"
+        android:textColor="@color/app_secondary"
+        android:textColorHighlight="@color/navbar_text"
+        android:textColorLink="@color/navbar_text"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orderResourceText">
+        app:layout_constraintTop_toBottomOf="@+id/orderResourceText" />
 
-        <TextView
-            android:id="@+id/orderStartDateText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="viewStart"
-            android:textColor="@color/same_stat"
-            android:textColorHighlight="@color/navbar_text"
-            android:textColorLink="@color/navbar_text"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/orderEndDateText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textAlignment="viewStart"
-            android:textColor="@color/negative_stat"
-            android:textColorHighlight="@color/navbar_text"
-            android:textColorLink="@color/navbar_text"
-            android:textSize="14sp" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/orderEndDateText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="viewStart"
+        android:textColor="@color/negative_stat"
+        android:textColorHighlight="@color/navbar_text"
+        android:textColorLink="@color/navbar_text"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/orderStartDateText" />
 
     <LinearLayout
         android:id="@+id/customerInfo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="1dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/order_list_item_footer_style"
         android:orientation="vertical"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/orderEndDateText">
 
         <TextView
             android:id="@+id/textView5"

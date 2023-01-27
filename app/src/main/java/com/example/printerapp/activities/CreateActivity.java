@@ -16,7 +16,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.printerapp.R;
-import com.example.printerapp.activities.MainActivity;
 import com.example.printerapp.adapters.ResourcesListAdapter;
 import com.example.printerapp.entities.BaseEntity;
 import com.example.printerapp.entities.Order;
@@ -49,7 +48,7 @@ public class CreateActivity extends AppCompatActivity implements IUpdatable, Tex
         dbManager = DbManager.getInstance(getApplicationContext());
         ResourcesListAdapter listAdapter = new ResourcesListAdapter(getApplicationContext(),
                 R.layout.resources_list_item, dbManager.getResources());
-        listAdapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
+        listAdapter.setDropDownViewResource(R.layout.resources_list_dropdown);
         listAdapter.notifyDataSetChanged();
 
         resourcesList.setAdapter(listAdapter);
@@ -80,6 +79,8 @@ public class CreateActivity extends AppCompatActivity implements IUpdatable, Tex
                         listAdapter.getResourceByIndex(resourcesList.getSelectedItemPosition())
                 ));
 
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
             } catch (ParseException ignored) {
             }
         });

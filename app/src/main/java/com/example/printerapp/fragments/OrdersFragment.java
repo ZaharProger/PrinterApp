@@ -18,6 +18,7 @@ import com.example.printerapp.activities.MainActivity;
 import com.example.printerapp.adapters.OrdersListAdapter;
 import com.example.printerapp.entities.BaseEntity;
 import com.example.printerapp.managers.DbManager;
+import com.google.android.material.bottomappbar.BottomAppBar;
 
 import java.util.Arrays;
 
@@ -36,7 +37,7 @@ public class OrdersFragment extends BaseFragment implements IUpdatable {
 
         ArrayAdapter<String> customersListAdapter = new ArrayAdapter<>(getContext(),
                 R.layout.customers_list_item, dbManager.getCustomers());
-        customersListAdapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
+        customersListAdapter.setDropDownViewResource(R.layout.customers_list_dropdown);
         customersListAdapter.notifyDataSetChanged();
         customersList.setAdapter(customersListAdapter);
 
@@ -44,6 +45,17 @@ public class OrdersFragment extends BaseFragment implements IUpdatable {
         ordersList.setLayoutManager(new LinearLayoutManager(getContext()));
         ordersList.setAdapter(new OrdersListAdapter(getContext(),
                 dbManager.getOrders(), Arrays.asList(this)));
+
+        ordersList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                BottomAppBar bottomAppBar = ((MainActivity) getActivity())
+                        .findViewById(R.id.bottomAppBar);
+                bottomAppBar.animate()
+                        .translationY(dy > 0 ? bottomAppBar.getHeight() : 0)
+                        .setDuration(300);
+            }
+        });
 
         updateView(null, null);
 
