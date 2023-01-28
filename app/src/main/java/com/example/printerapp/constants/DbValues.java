@@ -53,6 +53,7 @@ public enum DbValues implements EnumDecoder {
             "order_end_date, order_customer_name, order_customer_phone, order_size, resource_id, " +
             "resource_name, resource_price FROM orders " +
             "JOIN resource_types ON resource_id = resource_type;"),
+    DELETE_ORDER_BY_ID("DELETE FROM orders WHERE order_id = ?;"),
     GET_RESOURCES("SELECT * FROM resource_types;");
 
     private String stringValue;

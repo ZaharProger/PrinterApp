@@ -5,20 +5,18 @@ public class Order extends BaseEntity<Integer> {
     private int amount;
     private long startDate;
     private long endDate;
-    private String customerName;
-    private String customerPhone;
+    private Customer customer;
     private double size;
     private Resource resource;
 
-    public Order(int key, String name, int amount, long startDate, long endDate, String customerName,
-                 String customerPhone, double size, Resource resource) {
+    public Order(int key, String name, int amount, long startDate, long endDate, Customer customer,
+                 double size, Resource resource) {
         this.key = key;
         this.name = name;
         this.amount = amount;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.customerName = customerName;
-        this.customerPhone = customerPhone;
+        this.customer = customer;
         this.size = size;
         this.resource = resource;
     }
@@ -47,11 +45,7 @@ public class Order extends BaseEntity<Integer> {
         return resource;
     }
 
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public String getCustomerPhone() {
-        return customerPhone;
+    public Customer getCustomer() {
+        return customer;
     }
 }

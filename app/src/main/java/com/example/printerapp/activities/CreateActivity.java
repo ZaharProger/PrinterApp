@@ -7,9 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -17,7 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.printerapp.R;
 import com.example.printerapp.adapters.ResourcesListAdapter;
+import com.example.printerapp.constants.Actions;
 import com.example.printerapp.entities.BaseEntity;
+import com.example.printerapp.entities.Customer;
 import com.example.printerapp.entities.Order;
 import com.example.printerapp.entities.Resource;
 import com.example.printerapp.fragments.IUpdatable;
@@ -57,12 +57,12 @@ public class CreateActivity extends AppCompatActivity implements IUpdatable, Tex
         amountField.addTextChangedListener(this);
         sizeField.addTextChangedListener(this);
 
-        ((ImageButton) findViewById(R.id.backButton)).setOnClickListener(view -> {
+        findViewById(R.id.backButton).setOnClickListener(view -> {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         });
 
-        ((Button) findViewById(R.id.addOrderButton)).setOnClickListener(view -> {
+        findViewById(R.id.addOrderButton).setOnClickListener(view -> {
             try {
                 SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
                 Date date = format.parse(endDateField.getText().toString());
@@ -73,10 +73,13 @@ public class CreateActivity extends AppCompatActivity implements IUpdatable, Tex
                         Integer.parseInt(amountField.getText().toString().trim()),
                         System.currentTimeMillis(),
                         date.getTime(),
-                        customerNameField.getText().toString().trim(),
-                        customerPhoneField.getText().toString().trim(),
+                        new Customer(
+                                0,
+                                customerNameField.getText().toString().trim(),
+                                customerPhoneField.getText().toString().trim()
+                        ),
                         Double.parseDouble(sizeField.getText().toString().trim()),
-                        listAdapter.getResourceByIndex(resourcesList.getSelectedItemPosition())
+                        listAdapter.getItemByIndex(resourcesList.getSelectedItemPosition())
                 ));
 
                 Intent intent = new Intent(this, MainActivity.class);
@@ -87,15 +90,15 @@ public class CreateActivity extends AppCompatActivity implements IUpdatable, Tex
     }
 
     @Override
-    public void updateView(BaseEntity<Integer> relatedEntity, View relatedView) {
+    public void updateView(BaseEntity<Integer> relatedEntity, Actions relatedAction) {
         Spinner resourcesList = findViewById(R.id.resourcesList);
-        relatedView = findViewById(R.id.totalPriceField);
+        TextView totalPriceField = findViewById(R.id.totalPriceField);
 
         ResourcesListAdapter listAdapter = (ResourcesListAdapter) resourcesList.getAdapter();
-        relatedEntity = listAdapter.getResourceByIndex(resourcesList
+        relatedEntity = listAdapter.getItemByIndex(resourcesList
                 .getSelectedItemPosition());
 
-        if (relatedEntity != null && relatedView instanceof TextView) {
+        if (relatedEntity != null) {
             EditText amountField = findViewById(R.id.amountField);
             EditText sizeField = findViewById(R.id.sizeField);
 
@@ -107,7 +110,7 @@ public class CreateActivity extends AppCompatActivity implements IUpdatable, Tex
 
             double totalPrice = ((Resource) relatedEntity).getPrice() * amountNum * sizeNum;
 
-            ((TextView) relatedView).setText(String.format("%.1f руб", totalPrice));
+            totalPriceField.setText(String.format("%.1f руб", totalPrice));
         }
     }
 

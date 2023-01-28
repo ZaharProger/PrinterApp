@@ -7,16 +7,20 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.printerapp.constants.DbValues;
+import com.example.printerapp.entities.BaseEntity;
+import com.example.printerapp.entities.Customer;
 import com.example.printerapp.entities.Order;
 import com.example.printerapp.entities.Resource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DbManager extends SQLiteOpenHelper {
     private ArrayList<Order> orders;
     private ArrayList<Resource> resources;
+    private ArrayList<Customer> customers;
     private static DbManager dbManager;
 
     private DbManager(Context context) {
@@ -25,6 +29,7 @@ public class DbManager extends SQLiteOpenHelper {
 
         orders = new ArrayList<>();
         resources = new ArrayList<>();
+        customers = new ArrayList<>();
     }
 
     public static synchronized DbManager getInstance(Context context) {
@@ -52,6 +57,7 @@ public class DbManager extends SQLiteOpenHelper {
     private void fillRepositories() {
         orders.clear();
         resources.clear();
+        customers.clear();
 
         try {
             SQLiteDatabase sqLiteDatabase = getReadableDatabase();
@@ -91,8 +97,11 @@ public class DbManager extends SQLiteOpenHelper {
                                cursor.getInt(orderAmountColumnIndex),
                                cursor.getLong(orderStartDateColumnIndex),
                                cursor.getLong(orderEndDateColumnIndex),
-                               cursor.getString(orderCustomerNameColumnIndex),
-                               cursor.getString(orderCustomerPhoneColumnIndex),
+                               new Customer(
+                                       0,
+                                       cursor.getString(orderCustomerNameColumnIndex),
+                                       cursor.getString(orderCustomerPhoneColumnIndex)
+                               ),
                                cursor.getDouble(orderSizeColumnIndex),
                                new Resource(
                                        cursor.getInt(orderResourceIdColumnIndex),
@@ -126,6 +135,18 @@ public class DbManager extends SQLiteOpenHelper {
                 }
             }
 
+            for (int i = 0; i < orders.size(); ++i) {
+                Customer customer = orders.get(i).getCustomer();
+                boolean isExists = false;
+                for (int j = i + 1; j < orders.size() && !isExists; ++j) {
+                    isExists = customer.getName().equals(orders.get(j).getCustomer().getName());
+                }
+
+                if (!isExists) {
+                    customers.add(customer);
+                }
+            }
+
             if (cursor != null) {
                 cursor.close();
             }
@@ -152,11 +173,8 @@ public class DbManager extends SQLiteOpenHelper {
         }
     }
 
-    public String[] getCustomers() {
-        return orders.stream()
-                .map(Order::getCustomerName)
-                .distinct()
-                .toArray(String[]::new);
+    public ArrayList<Customer> getCustomers() {
+        return customers;
     }
 
     public ArrayList<Order> getOrders() {
@@ -174,10 +192,23 @@ public class DbManager extends SQLiteOpenHelper {
                 order.getAmount(),
                 order.getStartDate(),
                 order.getEndDate(),
-                order.getCustomerName(),
-                order.getCustomerPhone(),
+                order.getCustomer().getName(),
+                order.getCustomer().getPhone(),
                 order.getSize(),
                 order.getResource().getKey()
         });
+    }
+
+    public void deleteOrder(int orderId) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        sqLiteDatabase.execSQL(DbValues.DELETE_ORDER_BY_ID.getStringValue(), new Object[]{
+                orderId
+        });
+    }
+
+    public ArrayList<Order> filterOrders(BaseEntity<String> customerFilter) {
+        return customerFilter == null ? getOrders() : (ArrayList<Order>) orders.stream()
+                .filter(order -> order.getCustomer().getName().equals(customerFilter.getKey()))
+                .collect(Collectors.toList());
     }
 }
