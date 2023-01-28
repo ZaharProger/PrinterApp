@@ -19,6 +19,7 @@ import com.example.printerapp.adapters.OrdersListAdapter;
 import com.example.printerapp.entities.BaseEntity;
 import com.example.printerapp.managers.DbManager;
 import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Arrays;
 
@@ -49,10 +50,16 @@ public class OrdersFragment extends BaseFragment implements IUpdatable {
         ordersList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                BottomAppBar bottomAppBar = ((MainActivity) getActivity())
+                BottomAppBar bottomAppBar = getActivity()
                         .findViewById(R.id.bottomAppBar);
+                FloatingActionButton fab = getActivity()
+                        .findViewById(R.id.createButton);
+
                 bottomAppBar.animate()
                         .translationY(dy > 0 ? bottomAppBar.getHeight() : 0)
+                        .setDuration(300);
+                fab.animate()
+                        .translationX(dy > 0 ? bottomAppBar.getWidth() : 0)
                         .setDuration(300);
             }
         });

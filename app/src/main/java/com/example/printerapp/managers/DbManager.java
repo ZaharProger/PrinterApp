@@ -155,6 +155,7 @@ public class DbManager extends SQLiteOpenHelper {
     public String[] getCustomers() {
         return orders.stream()
                 .map(Order::getCustomerName)
+                .distinct()
                 .toArray(String[]::new);
     }
 
