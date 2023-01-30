@@ -100,17 +100,6 @@ public class OrdersListAdapter extends
         notifyDataSetChanged();
     }
 
-    public void deleteOrderById(int orderId) {
-        orders.removeIf(order -> order.getKey() == orderId);
-        notifyDataSetChanged();
-    }
-
-    public ArrayList<Customer> getCustomers() {
-        return (ArrayList<Customer>) orders.stream()
-                .map(Order::getCustomer)
-                .collect(Collectors.toList());
-    }
-
     public void sortOrders() {
         if (isSortAsc) {
             orders.sort(Comparator.comparingLong(Order::getEndDate));

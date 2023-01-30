@@ -204,6 +204,7 @@ public class DbManager extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(DbValues.DELETE_ORDER_BY_ID.getStringValue(), new Object[]{
                 orderId
         });
+        fillRepositories();
     }
 
     public ArrayList<Order> filterOrders(BaseEntity<String> customerFilter) {

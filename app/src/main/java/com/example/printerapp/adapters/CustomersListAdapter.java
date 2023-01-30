@@ -46,14 +46,6 @@ public class CustomersListAdapter extends BaseSpinnerAdapter<BaseEntity<String>>
         return mappedData;
     }
 
-    public void setCustomers(ArrayList<Customer> customers) {
-        fillItems(customers);
-        clear();
-        addAll(mapData(customers));
-
-        notifyDataSetChanged();
-    }
-
     @Override
     public BaseEntity<String> getItemByIndex(int index) {
         return index == 0? null : super.getItemByIndex(index);

@@ -79,6 +79,8 @@ public class OrdersFragment extends BaseFragment implements IUpdatable {
         customersList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Spinner customersList = fragmentView.findViewById(R.id.customersList);
+
                 ArrayList<Order> filteredOrders = dbManager.filterOrders(customersListAdapter
                         .getItemByIndex(customersList.getSelectedItemPosition()));
                 ((OrdersListAdapter) ordersList.getAdapter()).setOrders(filteredOrders);
@@ -101,30 +103,33 @@ public class OrdersFragment extends BaseFragment implements IUpdatable {
         Spinner customersList = fragmentView.findViewById(R.id.customersList);
         RecyclerView ordersList = fragmentView.findViewById(R.id.ordersList);
 
-        CustomersListAdapter customersListAdapter = (CustomersListAdapter) customersList.getAdapter();
-        OrdersListAdapter ordersListAdapter = (OrdersListAdapter) ordersList.getAdapter();
-
         switch (relatedAction) {
             case DELETE_ORDER:
             case FINISH_ORDER:
                 if (relatedEntity instanceof Order) {
-                    new ConfirmationDialog((Order) relatedEntity, relatedAction)
+                    new ConfirmationDialog((Order) relatedEntity, relatedAction, Arrays.asList(this))
                             .show(getParentFragmentManager(), relatedAction.getStringValue());
                 }
                 break;
             case UPDATE_VIEW:
+                DbManager dbManager = ((MainActivity) getActivity()).getDbManager();
+
                 if (relatedEntity instanceof Order) {
-                    ordersListAdapter.deleteOrderById(relatedEntity.getKey());
-                    customersListAdapter.setCustomers(ordersListAdapter.getCustomers());
+                    CustomersListAdapter customersListAdapter = new CustomersListAdapter(getContext(),
+                            R.layout.customers_list_item,
+                            dbManager.getCustomers()
+                    );
+
+                    customersListAdapter.setDropDownViewResource(R.layout.customers_list_dropdown);
+                    customersListAdapter.notifyDataSetChanged();
+                    customersList.setAdapter(customersListAdapter);
                 }
 
-                if (ordersListAdapter.getItemCount() != 0) {
-                    customersList.setVisibility(View.VISIBLE);
+                if (dbManager.getOrders().size() != 0) {
                     ordersList.setVisibility(View.VISIBLE);
                     notFoundText.setVisibility(View.INVISIBLE);
                 }
                 else {
-                    customersList.setVisibility(View.INVISIBLE);
                     ordersList.setVisibility(View.INVISIBLE);
                     notFoundText.setVisibility(View.VISIBLE);
                 }

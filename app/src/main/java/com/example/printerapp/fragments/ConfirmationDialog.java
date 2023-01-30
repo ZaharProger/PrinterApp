@@ -17,13 +17,19 @@ import com.example.printerapp.constants.Actions;
 import com.example.printerapp.entities.Order;
 import com.example.printerapp.managers.DbManager;
 
+import java.util.List;
+
 public class ConfirmationDialog extends DialogFragment {
     private Order order;
     private Actions action;
+    private List<IUpdatable> observers;
+    private boolean isCancelled;
 
-    public ConfirmationDialog(Order order, Actions action) {
+    public ConfirmationDialog(Order order, Actions action, List<IUpdatable> observers) {
         this.order = order;
         this.action = action;
+        this.observers = observers;
+        isCancelled = true;
     }
 
 
@@ -46,6 +52,8 @@ public class ConfirmationDialog extends DialogFragment {
             switch (action) {
                 case DELETE_ORDER:
                     dbManager.deleteOrder(order.getKey());
+                    isCancelled = false;
+                    onDestroy();
                     break;
             }
         });
@@ -63,8 +71,8 @@ public class ConfirmationDialog extends DialogFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        ((OrdersFragment) getParentFragment()).updateView(order, Actions.UPDATE_VIEW);
+        observers.forEach(observer -> observer
+                .updateView(isCancelled? null : order, Actions.UPDATE_VIEW));
         dismiss();
     }
 }
