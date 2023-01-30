@@ -28,7 +28,6 @@ import com.example.printerapp.managers.DbManager;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 public class CreateActivity extends AppCompatActivity implements IUpdatable, TextWatcher,
         AdapterView.OnItemSelectedListener {

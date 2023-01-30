@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.printerapp.R;
 import com.example.printerapp.constants.Actions;
-import com.example.printerapp.entities.Customer;
 import com.example.printerapp.entities.Order;
 import com.example.printerapp.fragments.IUpdatable;
 
@@ -22,8 +21,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class OrdersListAdapter extends
         RecyclerView.Adapter<OrdersListAdapter.OrdersListViewHolder> {

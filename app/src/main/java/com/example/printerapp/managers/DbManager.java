@@ -5,13 +5,13 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.example.printerapp.constants.DbValues;
 import com.example.printerapp.entities.BaseEntity;
 import com.example.printerapp.entities.Customer;
 import com.example.printerapp.entities.Order;
 import com.example.printerapp.entities.Resource;
+import com.example.printerapp.entities.Waste;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +22,8 @@ public class DbManager extends SQLiteOpenHelper {
     private ArrayList<Order> orders;
     private ArrayList<Resource> resources;
     private ArrayList<Customer> customers;
+    private ArrayList<Waste> wastes;
+
     private static DbManager dbManager;
 
     private DbManager(Context context) {
@@ -31,6 +33,7 @@ public class DbManager extends SQLiteOpenHelper {
         orders = new ArrayList<>();
         resources = new ArrayList<>();
         customers = new ArrayList<>();
+        wastes = new ArrayList<>();
     }
 
     public static synchronized DbManager getInstance(Context context) {
@@ -59,6 +62,7 @@ public class DbManager extends SQLiteOpenHelper {
         orders.clear();
         resources.clear();
         customers.clear();
+        wastes.clear();
 
         try {
             SQLiteDatabase sqLiteDatabase = getReadableDatabase();
@@ -136,6 +140,33 @@ public class DbManager extends SQLiteOpenHelper {
                 }
             }
 
+            cursor = sqLiteDatabase.rawQuery(DbValues
+                    .GET_WASTES.getStringValue(), null);
+            if (cursor != null) {
+                if (cursor.moveToFirst()) {
+                    do {
+                        int wasteIdColumnIndex = cursor
+                                .getColumnIndex(DbValues.WASTE_ID.getStringValue());
+                        int wasteMonthColumnIndex = cursor
+                                .getColumnIndex(DbValues.WASTE_MONTH.getStringValue());
+                        int wasteYearColumnIndex = cursor
+                                .getColumnIndex(DbValues.WASTE_YEAR.getStringValue());
+                        int electricityAmountColumnIndex = cursor
+                                .getColumnIndex(DbValues.ELECTRICITY_AMOUNT.getStringValue());
+                        int resourceAmountColumndIndex = cursor
+                                .getColumnIndex(DbValues.RESOURCE_AMOUNT.getStringValue());
+
+                        wastes.add(new Waste(
+                                cursor.getInt(wasteIdColumnIndex),
+                                cursor.getInt(wasteMonthColumnIndex),
+                                cursor.getInt(wasteYearColumnIndex),
+                                cursor.getDouble(electricityAmountColumnIndex),
+                                cursor.getDouble(resourceAmountColumndIndex)
+                        ));
+                    } while (cursor.moveToNext());
+                }
+            }
+
             for (int i = 0; i < orders.size(); ++i) {
                 Customer customer = orders.get(i).getCustomer();
                 boolean isExists = false;
@@ -186,6 +217,18 @@ public class DbManager extends SQLiteOpenHelper {
         return resources;
     }
 
+    public ArrayList<Waste> getWastes() {
+        return wastes;
+    }
+
+    public Waste getWasteByDate(int month, int year) {
+        List<Waste> foundWastes = wastes.stream()
+                .filter(waste -> waste.getWasteMonth() == month && waste.getWasteYear() == year)
+                .collect(Collectors.toList());
+
+        return foundWastes.size() != 0? foundWastes.get(0) : null;
+    }
+
     public void addOrder(Order order) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         sqLiteDatabase.execSQL(DbValues.INSERT_ORDER.getStringValue(), new Object[]{
@@ -202,22 +245,17 @@ public class DbManager extends SQLiteOpenHelper {
 
     public  void editOrder(Order order) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-        try {
-            sqLiteDatabase.execSQL(DbValues.UPDATE_ORDER.getStringValue(), new Object[]{
-                    order.getName(),
-                    order.getAmount(),
-                    order.getStartDate(),
-                    order.getEndDate(),
-                    order.getCustomer().getName(),
-                    order.getCustomer().getPhone(),
-                    order.getSize(),
-                    order.getResource().getKey(),
-                    order.getKey()
-            });
-        }
-        catch (SQLException e) {
-            Log.e("DB", e.getMessage());
-        }
+        sqLiteDatabase.execSQL(DbValues.UPDATE_ORDER.getStringValue(), new Object[]{
+                order.getName(),
+                order.getAmount(),
+                order.getStartDate(),
+                order.getEndDate(),
+                order.getCustomer().getName(),
+                order.getCustomer().getPhone(),
+                order.getSize(),
+                order.getResource().getKey(),
+                order.getKey()
+        });
     }
 
     public void deleteOrder(int orderId) {
@@ -232,5 +270,28 @@ public class DbManager extends SQLiteOpenHelper {
         return customerFilter == null ? getOrders() : (ArrayList<Order>) orders.stream()
                 .filter(order -> order.getCustomer().getName().equals(customerFilter.getKey()))
                 .collect(Collectors.toList());
+    }
+
+    public void addWaste(Waste waste) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        sqLiteDatabase.execSQL(DbValues.ADD_WASTE.getStringValue(), new Object[]{
+                waste.getWasteMonth(),
+                waste.getWasteYear(),
+                waste.getElectricityAmount(),
+                waste.getResourceAmount()
+        });
+        fillRepositories();
+    }
+
+    public void editWaste(Waste waste) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        sqLiteDatabase.execSQL(DbValues.EDIT_WASTE.getStringValue(), new Object[]{
+                waste.getWasteMonth(),
+                waste.getWasteYear(),
+                waste.getElectricityAmount(),
+                waste.getResourceAmount(),
+                waste.getKey()
+        });
+        fillRepositories();
     }
 }

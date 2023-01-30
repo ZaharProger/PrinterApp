@@ -12,7 +12,6 @@ import com.example.printerapp.R;
 import com.example.printerapp.entities.Resource;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class ResourcesListAdapter extends BaseSpinnerAdapter<Resource> {
     public ResourcesListAdapter(@NonNull Context context, int viewId,

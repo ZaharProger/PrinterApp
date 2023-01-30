@@ -14,9 +14,13 @@ import androidx.fragment.app.DialogFragment;
 import com.example.printerapp.R;
 import com.example.printerapp.activities.MainActivity;
 import com.example.printerapp.constants.Actions;
+import com.example.printerapp.constants.WastesConstants;
 import com.example.printerapp.entities.Order;
+import com.example.printerapp.entities.Waste;
 import com.example.printerapp.managers.DbManager;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class ConfirmationDialog extends DialogFragment {
@@ -49,19 +53,49 @@ public class ConfirmationDialog extends DialogFragment {
         DbManager dbManager = ((MainActivity) getActivity()).getDbManager();
 
         yesButton.setOnClickListener(view -> {
-            switch (action) {
-                case DELETE_ORDER:
-                    dbManager.deleteOrder(order.getKey());
-                    isCancelled = false;
-                    onDestroy();
-                    break;
+            if (action == Actions.FINISH_ORDER || action == Actions.DELETE_ORDER) {
+                dbManager.deleteOrder(order.getKey());
+                if (action == Actions.FINISH_ORDER) {
+                    SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
+                    SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+                    Date currentDate = new Date();
+
+                    int currentMonth = Integer.parseInt(monthFormat.format(currentDate));
+                    int currentYear = Integer.parseInt(yearFormat.format(currentDate));
+
+                    Waste foundWaste = dbManager.getWasteByDate(currentMonth, currentYear);
+
+                    double electricityAmount = (System.currentTimeMillis() - order.getStartDate())
+                            / WastesConstants.MILLISECONDS_IN_HOUR
+                            * WastesConstants.PRINTER_ELECTRICITY_AMOUNT;
+                    double resourceAmount = order.getAmount() * order.getSize();
+
+                    electricityAmount += foundWaste != null? foundWaste.getElectricityAmount() : 0;
+                    resourceAmount += foundWaste != null? foundWaste.getResourceAmount() : 0;
+
+                    Waste newWaste = new Waste(
+                            foundWaste != null? foundWaste.getKey() : 0,
+                            currentMonth,
+                            currentYear,
+                            electricityAmount,
+                            resourceAmount
+                    );
+
+                    if (foundWaste != null) {
+                        dbManager.editWaste(newWaste);
+                    }
+                    else {
+                        dbManager.addWaste(newWaste);
+                    }
+                }
+
+                isCancelled = false;
+                onDestroy();
             }
         });
         noButton.setOnClickListener(view -> {
-            switch (action) {
-                case DELETE_ORDER:
-                    onDestroy();
-                    break;
+            if (action == Actions.FINISH_ORDER || action == Actions.DELETE_ORDER) {
+                onDestroy();
             }
         });
 
