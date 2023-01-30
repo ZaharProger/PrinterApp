@@ -1,5 +1,6 @@
 package com.example.printerapp.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.printerapp.R;
+import com.example.printerapp.activities.CreateActivity;
 import com.example.printerapp.activities.MainActivity;
 import com.example.printerapp.adapters.CustomersListAdapter;
 import com.example.printerapp.adapters.OrdersListAdapter;
 import com.example.printerapp.constants.Actions;
+import com.example.printerapp.constants.IntentValues;
 import com.example.printerapp.entities.BaseEntity;
 import com.example.printerapp.entities.Order;
 import com.example.printerapp.managers.DbManager;
@@ -103,18 +106,28 @@ public class OrdersFragment extends BaseFragment implements IUpdatable {
         Spinner customersList = fragmentView.findViewById(R.id.customersList);
         RecyclerView ordersList = fragmentView.findViewById(R.id.ordersList);
 
+        boolean isOrder = relatedEntity instanceof Order;
+
         switch (relatedAction) {
             case DELETE_ORDER:
             case FINISH_ORDER:
-                if (relatedEntity instanceof Order) {
+                if (isOrder) {
                     new ConfirmationDialog((Order) relatedEntity, relatedAction, Arrays.asList(this))
                             .show(getParentFragmentManager(), relatedAction.getStringValue());
+                }
+                break;
+            case EDIT_ORDER:
+                if (isOrder) {
+                    Intent intent = new Intent((MainActivity) getActivity(), CreateActivity.class);
+                    intent.putExtra(IntentValues.ORDER.getStringValue(), (Order) relatedEntity);
+
+                    startActivity(intent);
                 }
                 break;
             case UPDATE_VIEW:
                 DbManager dbManager = ((MainActivity) getActivity()).getDbManager();
 
-                if (relatedEntity instanceof Order) {
+                if (isOrder) {
                     CustomersListAdapter customersListAdapter = new CustomersListAdapter(getContext(),
                             R.layout.customers_list_item,
                             dbManager.getCustomers()

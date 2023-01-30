@@ -4,6 +4,7 @@
     <string name="analytics_item">Анализ</string>
     <string name="create">Добавить</string>
     <string name="create_header">Давайте добавим заказ!</string>
+    <string name="edit_header">Редактирование заказа</string>
     <string name="save">Сохранить</string>
     <string name="delete_confirmation">Вы действительно хотите отменить заказ?</string>
     <string name="finish_confirmation">Вы действительно хотите завершить заказ?</string>

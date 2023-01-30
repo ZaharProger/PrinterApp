@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.printerapp.R;
 import com.example.printerapp.adapters.ResourcesListAdapter;
 import com.example.printerapp.constants.Actions;
+import com.example.printerapp.constants.IntentValues;
 import com.example.printerapp.entities.BaseEntity;
 import com.example.printerapp.entities.Customer;
 import com.example.printerapp.entities.Order;
@@ -26,10 +28,14 @@ import com.example.printerapp.managers.DbManager;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class CreateActivity extends AppCompatActivity implements IUpdatable, TextWatcher,
         AdapterView.OnItemSelectedListener {
     private DbManager dbManager;
+    private static final SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+    private long editedOrderStartDate;
+    private int editedOrderKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,16 +68,38 @@ public class CreateActivity extends AppCompatActivity implements IUpdatable, Tex
             startActivity(intent);
         });
 
-        findViewById(R.id.addOrderButton).setOnClickListener(view -> {
-            try {
-                SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-                Date date = format.parse(endDateField.getText().toString());
+        Intent receivedIntent = getIntent();
+        boolean hasOrder = receivedIntent.hasExtra(IntentValues.ORDER.getStringValue());
 
-                dbManager.addOrder(new Order(
-                        0,
+        if (hasOrder) {
+            Order receivedOrder = (Order) receivedIntent
+                    .getParcelableExtra(IntentValues.ORDER.getStringValue());
+
+            editedOrderStartDate = receivedOrder.getStartDate();
+            editedOrderKey = receivedOrder.getKey();
+
+            nameField.setText(receivedOrder.getName());
+            endDateField.setText(format.format(new Date(receivedOrder.getEndDate())));
+            amountField.setText(String.format("%s", receivedOrder.getAmount()));
+            sizeField.setText(String.format("%s", receivedOrder.getSize()));
+            resourcesList.setSelection(receivedOrder.getResource().getKey() - 1);
+            customerNameField.setText(receivedOrder.getCustomer().getName());
+            customerPhoneField.setText(receivedOrder.getCustomer().getPhone());
+        }
+
+        ((TextView) findViewById(R.id.createActivityHeader))
+                .setText(getString(hasOrder? R.string.edit_header : R.string.create_header));
+
+        Button addOrderButton = findViewById(R.id.addOrderButton);
+        addOrderButton.setText(getString(hasOrder? R.string.save : R.string.create));
+        addOrderButton.setOnClickListener(view -> {
+            try {
+                Date date = format.parse(endDateField.getText().toString());
+                Order newOrder = new Order (
+                        hasOrder? editedOrderKey : 0,
                         nameField.getText().toString().trim(),
                         Integer.parseInt(amountField.getText().toString().trim()),
-                        System.currentTimeMillis(),
+                        hasOrder? editedOrderStartDate : System.currentTimeMillis(),
                         date.getTime(),
                         new Customer(
                                 0,
@@ -80,7 +108,14 @@ public class CreateActivity extends AppCompatActivity implements IUpdatable, Tex
                         ),
                         Double.parseDouble(sizeField.getText().toString().trim()),
                         listAdapter.getItemByIndex(resourcesList.getSelectedItemPosition())
-                ));
+                );
+
+                if (hasOrder) {
+                    dbManager.editOrder(newOrder);
+                }
+                else {
+                    dbManager.addOrder(newOrder);
+                }
 
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);

@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.printerapp.constants.DbValues;
 import com.example.printerapp.entities.BaseEntity;
@@ -197,6 +198,26 @@ public class DbManager extends SQLiteOpenHelper {
                 order.getSize(),
                 order.getResource().getKey()
         });
+    }
+
+    public  void editOrder(Order order) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        try {
+            sqLiteDatabase.execSQL(DbValues.UPDATE_ORDER.getStringValue(), new Object[]{
+                    order.getName(),
+                    order.getAmount(),
+                    order.getStartDate(),
+                    order.getEndDate(),
+                    order.getCustomer().getName(),
+                    order.getCustomer().getPhone(),
+                    order.getSize(),
+                    order.getResource().getKey(),
+                    order.getKey()
+            });
+        }
+        catch (SQLException e) {
+            Log.e("DB", e.getMessage());
+        }
     }
 
     public void deleteOrder(int orderId) {
