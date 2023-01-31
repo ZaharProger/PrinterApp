@@ -11,6 +11,7 @@
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <string name="not_found">Ничего не найдено!\nДобавьте заказ, чтобы увидеть его в списке</string>
+    <string name="not_wasted">Не было зафиксировано расходов за прошлые месяцы!</string>
     <string name="create_form_main">Что будем печатать?</string>
     <string name="name">Опишите заказ</string>
     <string name="create_form_date">Нужно определить сроки!</string>
@@ -26,4 +27,8 @@
     <string name="customer_info">Информация о заказчике</string>
     <string name="customer_name">Имя клиента</string>
     <string name="customer_phone">Телефон клиента</string>
+    <string name="month_waste">Расходы за месяц</string>
+    <string name="compare_wastes">Сравните с расходами за предыдущие месяцы</string>
+    <string name="electricity_amount">Потрачено электроэнергии, кВт</string>
+    <string name="resource_amount">Потрачено пластика, см3</string>
 </resources>

@@ -229,6 +229,13 @@ public class DbManager extends SQLiteOpenHelper {
         return foundWastes.size() != 0? foundWastes.get(0) : null;
     }
 
+    public ArrayList<Waste> getPastWastes(int month, int year) {
+        return (ArrayList<Waste>) wastes.stream()
+                .filter(waste -> waste.getWasteYear() < year ||
+                        (waste.getWasteYear() == year && waste.getWasteMonth() < month))
+                .collect(Collectors.toList());
+    }
+
     public void addOrder(Order order) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         sqLiteDatabase.execSQL(DbValues.INSERT_ORDER.getStringValue(), new Object[]{

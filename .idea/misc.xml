@@ -7,7 +7,9 @@
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/ic_back.xml" value="0.245" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/ic_delete.xml" value="0.245" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/ic_edit.xml" value="0.245" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/ic_electricity.xml" value="0.245" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/ic_finish.xml" value="0.245" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/ic_resource.xml" value="0.245" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/ic_sort_asc.xml" value="0.245" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/input_style.xml" value="0.245" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/nav_bar_style.xml" value="0.2585" />
@@ -20,6 +22,8 @@
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/spinner_item_style.xml" value="0.245" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/spinner_item_style_dark.xml" value="0.245" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/spinner_item_style_light.xml" value="0.245" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/waste_list_item_date_style.xml" value="0.245" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/waste_list_item_style.xml" value="0.245" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/drawable/wrong_input_style.xml" value="0.245" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/layout/activity_create.xml" value="0.264" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/layout/activity_main.xml" value="0.264" />
@@ -33,6 +37,7 @@
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/layout/resources_list_dropdown.xml" value="0.17346014492753623" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/layout/resources_list_item.xml" value="0.17346014492753623" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/layout/spinner_dropdown_layout.xml" value="0.17346014492753623" />
+        <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/layout/wastes_list_item.xml" value="0.264" />
         <entry key="..\:/Users/domol_000/AndroidStudioProjects/PrinterApp/app/src/main/res/menu/menu_layout.xml" value="0.25416666666666665" />
       </map>
     </option>
