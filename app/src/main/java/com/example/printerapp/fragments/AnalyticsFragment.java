@@ -16,6 +16,8 @@ import com.example.printerapp.activities.MainActivity;
 import com.example.printerapp.adapters.WastesListAdapter;
 import com.example.printerapp.entities.Waste;
 import com.example.printerapp.managers.DbManager;
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,11 +42,9 @@ public class AnalyticsFragment extends BaseFragment {
         Waste currentWaste = dbManager.getWasteByDate(currentMonth, currentYear);
 
         ((TextView) fragmentView.findViewById(R.id.electricityAmountText))
-                .setText(String.format("%.2f",
-                        currentWaste != null? currentWaste.getElectricityAmount() : 0));
+                .setText(String.format("%.2f", currentWaste.getElectricityAmount()));
         ((TextView) fragmentView.findViewById(R.id.resourceAmountText))
-                .setText(String.format("%.2f",
-                        currentWaste != null? currentWaste.getResourceAmount() : 0));
+                .setText(String.format("%.2f", currentWaste.getResourceAmount()));
 
         WastesListAdapter wastesListAdapter = new WastesListAdapter(
                 getContext(),
@@ -56,6 +56,22 @@ public class AnalyticsFragment extends BaseFragment {
         wastesList.setHasFixedSize(false);
         wastesList.setLayoutManager(new LinearLayoutManager(getContext()));
         wastesList.setAdapter(wastesListAdapter);
+        wastesList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                BottomAppBar bottomAppBar = getActivity()
+                        .findViewById(R.id.bottomAppBar);
+                FloatingActionButton fab = getActivity()
+                        .findViewById(R.id.createButton);
+
+                bottomAppBar.animate()
+                        .translationY(dy > 0 ? bottomAppBar.getHeight() : 0)
+                        .setDuration(300);
+                fab.animate()
+                        .translationX(dy > 0 ? bottomAppBar.getWidth() : 0)
+                        .setDuration(300);
+            }
+        });
 
         if (wastesListAdapter.getItemCount() != 0) {
             wastesList.setVisibility(View.VISIBLE);

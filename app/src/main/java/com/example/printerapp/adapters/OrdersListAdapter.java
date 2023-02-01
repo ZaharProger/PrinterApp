@@ -27,10 +27,12 @@ public class OrdersListAdapter extends
 
     private Context context;
     private ArrayList<Order> orders;
-    private List<IUpdatable> observers;
+    private List<IUpdatable<Integer>> observers;
     private boolean isSortAsc;
 
-    public OrdersListAdapter(Context context, ArrayList<Order> orders, List<IUpdatable> observers) {
+    public OrdersListAdapter(Context context, ArrayList<Order> orders,
+                             List<IUpdatable<Integer>> observers) {
+
         this.context = context;
         this.orders = orders;
         this.observers = observers;

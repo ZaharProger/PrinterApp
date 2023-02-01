@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 
 import com.example.printerapp.R;
 import com.example.printerapp.activities.MainActivity;
@@ -23,16 +22,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class ConfirmationDialog extends DialogFragment {
+public class ConfirmationDialog extends BaseDialog<Integer> {
     private Order order;
     private Actions action;
-    private List<IUpdatable> observers;
     private boolean isCancelled;
 
-    public ConfirmationDialog(Order order, Actions action, List<IUpdatable> observers) {
+    public ConfirmationDialog(Order order, Actions action, List<IUpdatable<Integer>> observers) {
+        super(observers);
         this.order = order;
         this.action = action;
-        this.observers = observers;
         isCancelled = true;
     }
 
@@ -74,14 +72,14 @@ public class ConfirmationDialog extends DialogFragment {
                     resourceAmount += foundWaste != null? foundWaste.getResourceAmount() : 0;
 
                     Waste newWaste = new Waste(
-                            foundWaste != null? foundWaste.getKey() : 0,
+                            foundWaste.getKey() != 0? foundWaste.getKey() : 0,
                             currentMonth,
                             currentYear,
                             electricityAmount,
                             resourceAmount
                     );
 
-                    if (foundWaste != null) {
+                    if (foundWaste.getKey() != 0) {
                         dbManager.editWaste(newWaste);
                     }
                     else {

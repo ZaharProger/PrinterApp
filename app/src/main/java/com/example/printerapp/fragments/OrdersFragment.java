@@ -31,7 +31,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class OrdersFragment extends BaseFragment implements IUpdatable {
+public class OrdersFragment extends BaseFragment implements IUpdatable<Integer> {
 
     @Nullable
     @Override
@@ -118,7 +118,7 @@ public class OrdersFragment extends BaseFragment implements IUpdatable {
                 break;
             case EDIT_ORDER:
                 if (isOrder) {
-                    Intent intent = new Intent((MainActivity) getActivity(), CreateActivity.class);
+                    Intent intent = new Intent(getActivity(), CreateActivity.class);
                     intent.putExtra(IntentValues.ORDER.getStringValue(), (Order) relatedEntity);
 
                     startActivity(intent);

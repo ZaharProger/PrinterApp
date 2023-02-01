@@ -226,7 +226,7 @@ public class DbManager extends SQLiteOpenHelper {
                 .filter(waste -> waste.getWasteMonth() == month && waste.getWasteYear() == year)
                 .collect(Collectors.toList());
 
-        return foundWastes.size() != 0? foundWastes.get(0) : null;
+        return foundWastes.size() != 0? foundWastes.get(0) : new Waste();
     }
 
     public ArrayList<Waste> getPastWastes(int month, int year) {

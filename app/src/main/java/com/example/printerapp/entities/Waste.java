@@ -6,6 +6,14 @@ public class Waste extends BaseEntity<Integer> {
     private double electricityAmount;
     private double resourceAmount;
 
+    public  Waste() {
+        key = 0;
+        wasteMonth = 0;
+        wasteYear = 0;
+        electricityAmount = 0;
+        resourceAmount = 0;
+    }
+
     public Waste(int key, int wasteMonth, int wasteYear,
                  double electricityAmount, double resourceAmount) {
 
