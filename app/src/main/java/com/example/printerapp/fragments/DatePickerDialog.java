@@ -36,7 +36,7 @@ public class DatePickerDialog extends BaseDialog<String>
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         String preparedMonth = (month < 10)? "0" : "";
-        preparedMonth += month;
+        preparedMonth += month + 1;
         String dateString = String.format("%d.%s.%d", dayOfMonth, preparedMonth, year);
 
         BaseEntity<String> dateObject = new BaseEntity<>();

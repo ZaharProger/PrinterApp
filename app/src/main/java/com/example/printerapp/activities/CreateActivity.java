@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 
 import com.example.printerapp.R;
 import com.example.printerapp.adapters.ResourcesListAdapter;
@@ -33,6 +34,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class CreateActivity extends AppCompatActivity implements IUpdatable<String> {
     private DbManager dbManager;
@@ -217,33 +219,56 @@ public class CreateActivity extends AppCompatActivity implements IUpdatable<Stri
         Button addOrderButton = findViewById(R.id.addOrderButton);
         addOrderButton.setText(getString(hasOrder? R.string.save : R.string.create));
         addOrderButton.setOnClickListener(view -> {
-            try {
-                Date date = format.parse(endDateField.getText().toString());
-                Order newOrder = new Order (
-                        hasOrder? editedOrderKey : 0,
-                        nameField.getText().toString().trim(),
-                        Integer.parseInt(amountField.getText().toString().trim()),
-                        hasOrder? editedOrderStartDate : System.currentTimeMillis(),
-                        date.getTime(),
-                        new Customer(
-                                0,
-                                customerNameField.getText().toString().trim(),
-                                customerPhoneField.getText().toString().trim()
-                        ),
-                        Double.parseDouble(sizeField.getText().toString().trim()),
-                        listAdapter.getItemByIndex(resourcesList.getSelectedItemPosition())
-                );
+            List<TextView> inputFields = Arrays.asList(
+                    nameField,
+                    endDateField,
+                    amountField,
+                    sizeField,
+                    customerNameField,
+                    customerPhoneField
+            );
+            inputFields.forEach(inputField -> inputField
+                    .setBackground(AppCompatResources.getDrawable(getApplicationContext(),
+                            R.drawable.input_style)));
 
-                if (hasOrder) {
-                    dbManager.editOrder(newOrder);
-                }
-                else {
-                    dbManager.addOrder(newOrder);
-                }
+            List<TextView> emptyFields = Validator.getEmptyFields(inputFields);
+            emptyFields.forEach(emptyField -> emptyField
+                    .setBackground(AppCompatResources.getDrawable(getApplicationContext(),
+                            R.drawable.wrong_input_style)));
 
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-            } catch (ParseException ignored) {
+            if (emptyFields.size() == 0) {
+                findViewById(R.id.errorInputText).setVisibility(View.INVISIBLE);
+                try {
+                    Date date = format.parse(endDateField.getText().toString());
+                    Order newOrder = new Order (
+                            hasOrder? editedOrderKey : 0,
+                            nameField.getText().toString().trim(),
+                            Integer.parseInt(amountField.getText().toString().trim()),
+                            hasOrder? editedOrderStartDate : System.currentTimeMillis(),
+                            date.getTime(),
+                            new Customer(
+                                    0,
+                                    customerNameField.getText().toString().trim(),
+                                    customerPhoneField.getText().toString().trim()
+                            ),
+                            Double.parseDouble(sizeField.getText().toString().trim()),
+                            listAdapter.getItemByIndex(resourcesList.getSelectedItemPosition())
+                    );
+
+                    if (hasOrder) {
+                        dbManager.editOrder(newOrder);
+                    }
+                    else {
+                        dbManager.addOrder(newOrder);
+                    }
+
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                } catch (ParseException ignored) {
+                }
+            }
+            else {
+                findViewById(R.id.errorInputText).setVisibility(View.VISIBLE);
             }
         });
     }
